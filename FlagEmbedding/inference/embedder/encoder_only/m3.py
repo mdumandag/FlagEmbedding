@@ -59,6 +59,7 @@ class M3Embedder(AbsEmbedder):
         pooling_method: str = "cls",
         trust_remote_code: bool = False,
         cache_dir: Optional[str] = None,
+        revision: Optional[str] = None,
         colbert_dim: int = -1,
         # inference
         batch_size: int = 256,
@@ -89,14 +90,16 @@ class M3Embedder(AbsEmbedder):
         self.tokenizer = AutoTokenizer.from_pretrained(
             model_name_or_path,
             trust_remote_code=trust_remote_code,
-            cache_dir=cache_dir
+            cache_dir=cache_dir,
+            revision=revision,
         )
         self.model = EncoderOnlyEmbedderM3ModelForInference(
             EncoderOnlyEmbedderM3Runner.get_model(
                 model_name_or_path,
                 trust_remote_code=trust_remote_code,
                 colbert_dim=colbert_dim,
-                cache_dir=cache_dir
+                cache_dir=cache_dir,
+                revision=revision,
             ),
             tokenizer=self.tokenizer,
             sentence_pooling_method=pooling_method,
