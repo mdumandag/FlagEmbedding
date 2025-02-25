@@ -46,6 +46,7 @@ class EncoderOnlyEmbedderM3Runner(AbsEmbedderRunner):
         colbert_dim: int = -1,
         cache_dir: str = None,
         revision: str = None,
+        local_files_only: bool = False,
     ):
         """Get the model.
 
@@ -56,6 +57,7 @@ class EncoderOnlyEmbedderM3Runner(AbsEmbedderRunner):
             colbert_dim (int, optional): Colbert dim to set. Defaults to ``-1``.
             cache_dir (str, optional): HF cache dir to store the model. Defaults to ``None``.
             revision (str, optional): HF revision for the model. Defaults to ``None``(latest).
+            local_files_only (bool, optional): Whether to only use local files for the model. Defaults to ``False``.
 
         Returns:
             dict: A dictionary containing the model, colbert linear and sparse linear.
@@ -66,6 +68,7 @@ class EncoderOnlyEmbedderM3Runner(AbsEmbedderRunner):
                 repo_id=model_name_or_path,
                 cache_dir=cache_folder,
                 revision=revision,
+                local_files_only=local_files_only,
                 ignore_patterns=['flax_model.msgpack', 'rust_model.ot', 'tf_model.h5']
             )
 
@@ -73,6 +76,7 @@ class EncoderOnlyEmbedderM3Runner(AbsEmbedderRunner):
             model_name_or_path,
             cache_dir=cache_folder,
             revision=revision,
+            local_files_only=local_files_only,
             trust_remote_code=trust_remote_code
         )
         colbert_linear = torch.nn.Linear(
